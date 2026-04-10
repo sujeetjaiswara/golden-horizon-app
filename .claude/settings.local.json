@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:ui.shadcn.com)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npm create vite@latest . -- --template react-ts 2>&1)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npm install 2>&1)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npm install -D @types/node 2>&1)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npx shadcn@latest init -d --defaults 2>&1)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npm install suncalc date-fns framer-motion react-router-dom 2>&1)",
+      "Bash(cd /d/claude-lab/golden-horizon-app && npm install -D @types/suncalc 2>&1)"
+    ]
+  }
+}
