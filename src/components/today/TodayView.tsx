@@ -14,15 +14,18 @@ export function TodayView() {
 
   return (
     <PageTransition>
-      <div className="space-y-4">
+      <div className="flex flex-col gap-4 lg:gap-6">
         <div className="text-center">
-          <h2 className="text-sm font-medium text-muted-foreground">{formatDate(today)}</h2>
+          <p className="text-xs font-medium uppercase tracking-widest text-amber">Today</p>
+          <h2 className="mt-0.5 text-lg font-semibold tracking-tight">{formatDate(today)}</h2>
         </div>
 
-        <CountdownSection lat={lat} lng={lng} />
-        <SunPositionArc data={sunData} lat={lat} lng={lng} />
-        <SunTimesCard data={sunData} />
-        <GoldenHourCard data={sunData} />
+        <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
+          <CountdownSection lat={lat} lng={lng} />
+          <SunPositionArc data={sunData} lat={lat} lng={lng} />
+          <SunTimesCard data={sunData} />
+          <GoldenHourCard data={sunData} />
+        </div>
       </div>
     </PageTransition>
   );

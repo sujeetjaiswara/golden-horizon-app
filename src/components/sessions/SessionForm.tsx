@@ -41,7 +41,8 @@ export function SessionForm({ onSubmit }: SessionFormProps) {
       <DialogTrigger asChild>
         <Button
           size="icon"
-          className="fixed bottom-20 right-4 z-50 h-14 w-14 rounded-full bg-gradient-to-br from-amber to-sunset shadow-lg hover:shadow-xl"
+          aria-label="Log a session"
+          className="fixed bottom-24 right-4 z-50 h-14 w-14 rounded-full bg-gradient-to-br from-amber to-sunset shadow-lg ring-1 ring-amber/30 transition-shadow hover:shadow-xl lg:bottom-8 lg:right-8"
         >
           <Plus className="h-6 w-6" />
         </Button>

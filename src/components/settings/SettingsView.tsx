@@ -21,31 +21,37 @@ export function SettingsView() {
 
   return (
     <PageTransition>
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Settings</h2>
-        <LocationSettings />
-        <ReminderSettings />
+      <div className="flex flex-col gap-4 lg:gap-6">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-widest text-amber">Settings</p>
+          <h2 className="mt-0.5 text-lg font-semibold tracking-tight">Preferences</h2>
+        </div>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Database className="h-4 w-4" />
-              Data
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-xs text-muted-foreground">
-              All data is stored locally in your browser. Nothing is sent to any server.
-            </p>
-            <Separator />
-            <Button variant="destructive" size="sm" onClick={clearSessions}>
-              <Trash2 className="mr-1 h-3.5 w-3.5" />
-              Clear All Sessions
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="grid gap-4 sm:grid-cols-2 lg:gap-6">
+          <LocationSettings />
+          <ReminderSettings />
 
-        <p className="text-center text-xs text-muted-foreground pb-4">
+          <Card className="card-premium sm:col-span-2">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Database className="h-4 w-4 text-amber" aria-hidden />
+                Data
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                All data is stored locally in your browser. Nothing is sent to any server.
+              </p>
+              <Separator />
+              <Button variant="destructive" size="sm" onClick={clearSessions}>
+                <Trash2 className="mr-1 h-3.5 w-3.5" />
+                Clear All Sessions
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <p className="pb-4 text-center text-xs text-muted-foreground">
           Golden Horizon v1.0 — Sun data powered by SunCalc
         </p>
       </div>

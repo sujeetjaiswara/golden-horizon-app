@@ -13,22 +13,22 @@ interface SessionCardProps {
 
 export function SessionCard({ session, onDelete }: SessionCardProps) {
   return (
-    <Card className="transition-transform hover:scale-[1.02]">
-      <CardContent className="py-4">
-        <div className="mb-2 flex items-start justify-between">
+    <Card className="card-premium h-full py-4">
+      <CardContent className="flex h-full flex-col py-0">
+        <div className="mb-2 flex items-start justify-between gap-2">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-sm font-medium">{formatDate(new Date(session.date))}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <Calendar className="h-3.5 w-3.5 text-amber" aria-hidden />
+              <span className="text-sm font-semibold">{formatDate(new Date(session.date))}</span>
               {session.duringGoldenHour && (
-                <Badge className="bg-amber/10 text-amber border-amber/30 text-xs">
+                <Badge className="border-amber/30 bg-amber/10 text-xs text-amber">
                   Golden Hour
                 </Badge>
               )}
             </div>
             {session.location && (
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <MapPin className="h-3 w-3" />
+                <MapPin className="h-3 w-3 text-sunset" aria-hidden />
                 <span>{session.location}</span>
               </div>
             )}
@@ -36,7 +36,8 @@ export function SessionCard({ session, onDelete }: SessionCardProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+            aria-label="Delete session"
+            className="h-8 w-8 shrink-0 text-muted-foreground hover:text-destructive"
             onClick={() => onDelete(session.id)}
           >
             <Trash2 className="h-4 w-4" />
@@ -47,7 +48,11 @@ export function SessionCard({ session, onDelete }: SessionCardProps) {
           <p className="mb-2 text-sm text-muted-foreground">{session.notes}</p>
         )}
 
-        {session.rating > 0 && <StarRating value={session.rating} readonly />}
+        {session.rating > 0 && (
+          <div className="mt-auto pt-1">
+            <StarRating value={session.rating} readonly />
+          </div>
+        )}
       </CardContent>
     </Card>
   );

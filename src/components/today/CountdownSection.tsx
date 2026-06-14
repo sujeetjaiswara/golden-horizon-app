@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
+import { Sunrise, Sunset } from 'lucide-react';
 import { CountdownTimer } from '@/components/shared/CountdownTimer';
 import { GoldenHourBadge } from '@/components/shared/GoldenHourBadge';
 import { useGoldenHour } from '@/hooks/useGoldenHour';
@@ -24,11 +25,17 @@ export function CountdownSection({ lat, lng }: CountdownSectionProps) {
   }
 
   const label = event.window.type === 'morning' ? 'Morning' : 'Evening';
+  const Icon = event.window.type === 'morning' ? Sunrise : Sunset;
 
   return (
-    <Card className={event.isActive ? 'animate-glow-pulse border-amber/40' : ''}>
-      <CardContent className="flex flex-col items-center gap-4 py-6">
+    <Card
+      className={`h-full bg-gradient-to-b from-card to-accent/10 ${
+        event.isActive ? 'animate-glow-pulse border-amber/40' : ''
+      }`}
+    >
+      <CardContent className="flex h-full flex-col items-center justify-center gap-4 py-6">
         <div className="flex items-center gap-2">
+          <Icon className="h-4 w-4 text-amber" aria-hidden />
           <span className="text-sm font-medium text-muted-foreground">
             {event.isActive ? `${label} Golden Hour` : `Next: ${label} Golden Hour`}
           </span>

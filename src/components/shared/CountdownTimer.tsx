@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { padZero } from '@/lib/format-time';
 
 interface CountdownTimerProps {
@@ -11,22 +12,27 @@ export function CountdownTimer({ hours, minutes, seconds, large }: CountdownTime
   const textSize = large ? 'text-5xl md:text-6xl' : 'text-3xl';
   const labelSize = large ? 'text-xs' : 'text-[10px]';
 
+  const units: Array<{ value: number; unit: string }> = [
+    { value: hours, unit: 'hrs' },
+    { value: minutes, unit: 'min' },
+    { value: seconds, unit: 'sec' },
+  ];
+
   return (
-    <div className="flex items-baseline gap-1 font-mono tracking-wider">
-      <div className="flex flex-col items-center">
-        <span className={`${textSize} font-bold text-primary`}>{padZero(hours)}</span>
-        <span className={`${labelSize} text-muted-foreground uppercase`}>hrs</span>
-      </div>
-      <span className={`${textSize} font-bold text-primary/50`}>:</span>
-      <div className="flex flex-col items-center">
-        <span className={`${textSize} font-bold text-primary`}>{padZero(minutes)}</span>
-        <span className={`${labelSize} text-muted-foreground uppercase`}>min</span>
-      </div>
-      <span className={`${textSize} font-bold text-primary/50`}>:</span>
-      <div className="flex flex-col items-center">
-        <span className={`${textSize} font-bold text-primary`}>{padZero(seconds)}</span>
-        <span className={`${labelSize} text-muted-foreground uppercase`}>sec</span>
-      </div>
+    <div className="flex items-center gap-2 font-mono sm:gap-3">
+      {units.map(({ value, unit }, i) => (
+        <Fragment key={unit}>
+          {i > 0 && <span className={`${textSize} font-bold text-primary/30`}>:</span>}
+          <div className="flex flex-col items-center">
+            <span className={`${textSize} font-bold tabular-nums text-primary`}>{padZero(value)}</span>
+            <span
+              className={`${labelSize} font-medium uppercase tracking-widest text-muted-foreground`}
+            >
+              {unit}
+            </span>
+          </div>
+        </Fragment>
+      ))}
     </div>
   );
 }

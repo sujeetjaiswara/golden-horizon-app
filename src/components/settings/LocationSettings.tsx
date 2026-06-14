@@ -17,10 +17,10 @@ export function LocationSettings() {
   }
 
   return (
-    <Card>
+    <Card className="card-premium h-full">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-base">
-          <MapPin className="h-4 w-4" />
+          <MapPin className="h-4 w-4 text-amber" aria-hidden />
           Location
         </CardTitle>
       </CardHeader>

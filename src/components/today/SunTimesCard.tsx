@@ -17,24 +17,24 @@ export function SunTimesCard({ data }: { data: DaySunData }) {
   }
 
   return (
-    <Card className="transition-transform hover:scale-[1.02]">
-      <CardContent className="grid grid-cols-2 gap-4 py-4">
+    <Card className="card-premium h-full">
+      <CardContent className="grid h-full grid-cols-2 items-center gap-4 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber/10">
-            <Sunrise className="h-5 w-5 text-amber" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-amber/10 ring-1 ring-amber/15">
+            <Sunrise className="h-5 w-5 text-amber" aria-hidden />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground">Sunrise</p>
-            <p className="text-lg font-semibold">{formatTime(data.sunrise)}</p>
+            <p className="text-xs font-medium text-muted-foreground">Sunrise</p>
+            <p className="text-xl font-semibold tabular-nums">{formatTime(data.sunrise)}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sunset/10">
-            <Sunset className="h-5 w-5 text-sunset" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-sunset/10 ring-1 ring-sunset/15">
+            <Sunset className="h-5 w-5 text-sunset" aria-hidden />
           </div>
           <div>
-            <p className="text-xs text-muted-foreground">Sunset</p>
-            <p className="text-lg font-semibold">{formatTime(data.sunset)}</p>
+            <p className="text-xs font-medium text-muted-foreground">Sunset</p>
+            <p className="text-xl font-semibold tabular-nums">{formatTime(data.sunset)}</p>
           </div>
         </div>
       </CardContent>

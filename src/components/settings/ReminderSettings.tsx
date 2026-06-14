@@ -29,10 +29,10 @@ export function ReminderSettings() {
   }
 
   return (
-    <Card>
+    <Card className="card-premium h-full">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-base">
-          <Bell className="h-4 w-4" />
+          <Bell className="h-4 w-4 text-amber" aria-hidden />
           Reminders
         </CardTitle>
       </CardHeader>

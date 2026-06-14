@@ -11,8 +11,18 @@ export function SessionLogView() {
 
   return (
     <PageTransition>
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Session Log</h2>
+      <div className="flex flex-col gap-4 lg:gap-6">
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-widest text-amber">Sessions</p>
+            <h2 className="mt-0.5 text-lg font-semibold tracking-tight">Session Log</h2>
+          </div>
+          {sessions.length > 0 && (
+            <span className="text-xs text-muted-foreground">
+              {sessions.length} logged
+            </span>
+          )}
+        </div>
 
         {sessions.length === 0 ? (
           <EmptyState
@@ -20,11 +30,12 @@ export function SessionLogView() {
             description="Tap the + button to log your first photo session"
           />
         ) : (
-          <ScrollArea className="h-[calc(100vh-240px)]">
-            <div className="space-y-3 pr-2">
+          <ScrollArea className="h-[calc(100vh-220px)]">
+            <div className="grid gap-3 pr-2 sm:grid-cols-2 sm:gap-4">
               {sessions.map((session, i) => (
                 <motion.div
                   key={session.id}
+                  className="h-full"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05, duration: 0.2 }}

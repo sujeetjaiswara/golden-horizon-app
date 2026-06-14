@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Sun } from 'lucide-react';
 import { getSunPosition } from '@/lib/sun-calculations';
 import type { DaySunData } from '@/lib/types';
 
@@ -38,16 +40,39 @@ export function SunPositionArc({ data, lat, lng }: SunPositionArcProps) {
   const sunY = cy - ry * Math.sin(angle);
 
   const altitudeDeg = (position.altitude * 180) / Math.PI;
+  const statusText = isDay
+    ? `Sun altitude: ${altitudeDeg.toFixed(1)}°`
+    : 'Sun is below the horizon';
 
   return (
-    <div className="flex flex-col items-center">
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-xs">
+    <Card className="card-premium h-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Sun className="h-4 w-4 text-gold" aria-hidden />
+          Sun Position
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex h-full flex-col items-center justify-center pt-0">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full max-w-sm"
+        role="img"
+        aria-label={`Sun position arc. ${statusText}.`}
+      >
+        <title>{statusText}</title>
         <defs>
           <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="oklch(0.75 0.18 55)" stopOpacity="0.3" />
             <stop offset="50%" stopColor="oklch(0.78 0.16 75)" stopOpacity="0.5" />
             <stop offset="100%" stopColor="oklch(0.65 0.22 35)" stopOpacity="0.3" />
           </linearGradient>
+          <filter id="sunGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
         {/* horizon line */}
@@ -78,7 +103,7 @@ export function SunPositionArc({ data, lat, lng }: SunPositionArcProps) {
 
         {/* sun indicator */}
         {isDay && (
-          <g>
+          <g filter="url(#sunGlow)">
             <circle cx={sunX} cy={sunY} r="14" fill="oklch(0.78 0.16 75)" fillOpacity="0.2" />
             <circle cx={sunX} cy={sunY} r="8" fill="oklch(0.85 0.14 80)" />
             <circle cx={sunX} cy={sunY} r="5" fill="oklch(0.78 0.16 75)" />
@@ -93,12 +118,9 @@ export function SunPositionArc({ data, lat, lng }: SunPositionArcProps) {
           Set
         </text>
       </svg>
-      <p className="text-xs text-muted-foreground">
-        {isDay
-          ? `Sun altitude: ${altitudeDeg.toFixed(1)}°`
-          : 'Sun is below the horizon'}
-      </p>
-    </div>
+      <p className="mt-1 text-xs font-medium text-muted-foreground">{statusText}</p>
+      </CardContent>
+    </Card>
   );
 }
 
