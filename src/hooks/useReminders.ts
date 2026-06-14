@@ -9,17 +9,20 @@ export function useReminders(
   minutesBefore: number
 ) {
   const event = useGoldenHour(lat, lng);
+  const eventStart = event?.window.start.getTime();
+  const eventType = event?.window.type;
+  const eventActive = event?.isActive;
 
   useEffect(() => {
-    if (!enabled || !event || event.isActive) {
+    if (!enabled || eventStart === undefined || eventActive) {
       cancelScheduledNotification();
       return;
     }
 
-    const notifyAt = new Date(event.window.start.getTime() - minutesBefore * 60 * 1000);
+    const notifyAt = new Date(eventStart - minutesBefore * 60 * 1000);
 
     if (notifyAt.getTime() > Date.now()) {
-      const label = event.window.type === 'morning' ? 'Morning' : 'Evening';
+      const label = eventType === 'morning' ? 'Morning' : 'Evening';
       scheduleNotification(
         `${label} Golden Hour Soon`,
         `Golden hour starts in ${minutesBefore} minutes. Grab your camera!`,
@@ -28,5 +31,5 @@ export function useReminders(
     }
 
     return () => cancelScheduledNotification();
-  }, [enabled, minutesBefore, event?.window.start.getTime(), lat, lng]);
+  }, [enabled, minutesBefore, eventStart, eventType, eventActive]);
 }

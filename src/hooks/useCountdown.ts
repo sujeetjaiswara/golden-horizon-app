@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react';
 import { formatDuration } from '@/lib/format-time';
 
+const ZERO = { hours: 0, minutes: 0, seconds: 0 };
+
 export function useCountdown(targetDate: Date | null) {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const targetTime = targetDate?.getTime() ?? null;
+  const [timeLeft, setTimeLeft] = useState(ZERO);
 
   useEffect(() => {
-    if (!targetDate) {
-      setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
-      return;
-    }
+    if (targetTime === null) return;
 
-    function update() {
-      const ms = targetDate!.getTime() - Date.now();
-      setTimeLeft(formatDuration(ms));
-    }
-
+    const update = () => setTimeLeft(formatDuration(targetTime - Date.now()));
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, [targetDate?.getTime()]);
+  }, [targetTime]);
 
-  return timeLeft;
+  return targetTime === null ? ZERO : timeLeft;
 }

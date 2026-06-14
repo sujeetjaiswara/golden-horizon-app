@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getSunPosition } from '@/lib/sun-calculations';
 import type { DaySunData } from '@/lib/types';
 
@@ -9,16 +9,19 @@ interface SunPositionArcProps {
 }
 
 export function SunPositionArc({ data, lat, lng }: SunPositionArcProps) {
-  const position = useMemo(() => {
-    const now = new Date();
-    return getSunPosition(now, lat, lng);
-  }, [lat, lng]);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const position = useMemo(() => getSunPosition(new Date(now), lat, lng), [now, lat, lng]);
 
   if (data.isPolar) return null;
 
   const sunriseTime = data.sunrise.getTime();
   const sunsetTime = data.sunset.getTime();
-  const now = Date.now();
 
   const dayProgress = Math.max(0, Math.min(1, (now - sunriseTime) / (sunsetTime - sunriseTime)));
   const isDay = now >= sunriseTime && now <= sunsetTime;

@@ -28,7 +28,7 @@ export function LocationProvider({ children }: { children: ReactNode }) {
         manualLng: geo.lng!,
       }));
     }
-  }, [geo.lat, geo.lng, settings.locationMode]);
+  }, [geo.lat, geo.lng, settings.locationMode, setSettings]);
 
   const lat = settings.locationMode === 'auto' && geo.lat !== null ? geo.lat : settings.manualLat;
   const lng = settings.locationMode === 'auto' && geo.lng !== null ? geo.lng : settings.manualLng;
@@ -53,6 +53,7 @@ export function LocationProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook colocated with provider
 export function useLocation() {
   const ctx = useContext(LocationContext);
   if (!ctx) throw new Error('useLocation must be used within LocationProvider');

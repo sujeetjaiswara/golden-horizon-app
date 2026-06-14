@@ -8,18 +8,15 @@ interface GeolocationState {
 }
 
 export function useGeolocation() {
-  const [state, setState] = useState<GeolocationState>({
+  const [state, setState] = useState<GeolocationState>(() => ({
     lat: null,
     lng: null,
-    error: null,
-    loading: true,
-  });
+    error: navigator.geolocation ? null : 'Geolocation not supported',
+    loading: !!navigator.geolocation,
+  }));
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      setState(s => ({ ...s, error: 'Geolocation not supported', loading: false }));
-      return;
-    }
+    if (!navigator.geolocation) return;
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
